@@ -1,7 +1,10 @@
+import ImageGalleryItem from '../ImageGalleryItem/ImageGalleryItem';
+
+import s from './ImageGallery.module.scss';
 export default function ImageGallery() {
   return (
-    <ul className="ImageGallery">
-      {/* <!-- Набор <li> с изображениями --> */}
+    <ul className={s.ImageGallery}>
+      <ImageGalleryItem />
     </ul>
   );
 }
