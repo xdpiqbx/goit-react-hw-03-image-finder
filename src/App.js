@@ -1,18 +1,51 @@
 import { Component } from 'react';
+
 import Searchbar from './components/Searchbar/Searchbar';
 import ImageGallery from './components/ImageGallery/ImageGallery';
-import Loader from 'react-loader-spinner';
-import Button from './components/Button';
+import Container from './components/Container/Container';
+import Modal from './components/Modal';
 
 class App extends Component {
+  state = {
+    query: '',
+    showModal: false,
+    bigImage: null,
+    alt: null,
+  };
+
+  onSubmitHandler = query => {
+    this.setState({
+      query,
+    });
+  };
+
+  getContentForModal = (bigImage, alt) => {
+    this.setState({
+      bigImage,
+      alt,
+      showModal: true,
+    });
+  };
+
+  toggleModal = () => {
+    this.setState(prevState => ({
+      showModal: !prevState.showModal,
+    }));
+  };
+
   render() {
+    const { query, showModal, bigImage, alt } = this.state;
     return (
-      <div>
-        <Searchbar />
-        <ImageGallery />
-        <Loader type="RevolvingDot" color="#00BFFF" height={100} width={100} />
-        <Button />
-      </div>
+      <Container>
+        <Searchbar onSubmitHandler={this.onSubmitHandler} />
+        <ImageGallery
+          query={query}
+          getContentForModal={this.getContentForModal}
+        />
+        {showModal && (
+          <Modal src={bigImage} alt={alt} onClose={this.toggleModal} />
+        )}
+      </Container>
     );
   }
 }
